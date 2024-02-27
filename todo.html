@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+    }
+    
+    .container {
+        max-width: 400px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+        text-align: center;
+        color: #333;
+    }
+    
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+    
+    button {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    li {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    li:last-child {
+        border-bottom: none;
+    }
+</style> 
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add New Task">
+        <button onclick="addTask()">Add Task</button>
+        <ul id="taskList"></ul>
+        <button onclick="clearTasks()">Clear All</button>
+    </div>
+
+    <script>
+        // Load tasks from local storage when the page loads
+document.addEventListener('DOMContentLoaded', function () {
+    loadTasks();
+});
+
+// Add task to the list
+function addTask() {
+    let taskInput = document.getElementById('taskInput');
+    let taskList = document.getElementById('taskList');
+
+    if (taskInput.value.trim() !== '') {
+        let taskItem = document.createElement('li');
+        taskItem.textContent = taskInput.value.trim();
+        taskList.appendChild(taskItem);
+
+        saveTask(taskInput.value.trim());
+        taskInput.value = '';
+    } else {
+        alert('Please enter a task.');
+    }
+}
+
+function addtodo(todo){
+
+let para = document.createElement('p');
+para.innerText = todo;
+todoList.appendChild(para)
+para.addEventListener('click',()=>{
+    para.style.textDecoration = 'line-through'
+    remove(todo)
+})
+para.addEventListener('dblclick',()=>{
+    todoList.removeChild(para)
+    remove(todo)
+})
+
+}
+// Save task to local storage
+function saveTask(task) {
+    let tasks = localStorage.getItem('tasks') ? JSON.parse(localStorage.getItem('tasks')) : [];
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Load tasks from local storage
+function loadTasks() {
+    let tasks = localStorage.getItem('tasks');
+    if (tasks) {
+        tasks = JSON.parse(tasks);
+        let taskList = document.getElementById('taskList');
+        tasks.forEach(task => {
+            let taskItem = document.createElement('li');
+            taskItem.textContent = task;
+            taskList.appendChild(taskItem);
+        });
+    }
+}
+
+// Clear all tasks
+function clearTasks() {
+    localStorage.removeItem('tasks');
+    document.getElementById('taskList').innerHTML = '';
+}
+
+
+
+    </script>
+</body>
+</html>
